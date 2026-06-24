@@ -1,32 +1,32 @@
 
 
-const shopping = new Promise((resolve,reject)=>{
+// const shopping = new Promise((resolve,reject)=>{
 
-    let cart = ["shoes","choklet"];
+//     let cart = ["shoes","choklet"];
 
-    cart = [];
+//     cart = [];
 
-    setTimeout(()=>{
+//     setTimeout(()=>{
 
-        if(cart.length === 0){
-           return reject("no product found in cart");
-        }
-        else{
-         return resolve("please proceed to check out")
-        }
-    },500)
-});
-
-
-shopping.then((smg)=>{
-    console.log(smg);
-});
+//         if(cart.length === 0){
+//            return reject("no product found in cart");
+//         }
+//         else{
+//          return resolve("please proceed to check out")
+//         }
+//     },500)
+// });
 
 
+// shopping.then((smg)=>{
+//     console.log(smg);
+// });
 
-shopping.catch((err)=>{
-    console.log(err);
-});
+
+
+// shopping.catch((err)=>{
+//     console.log(err);
+// });
 
 
 
@@ -36,27 +36,55 @@ shopping.catch((err)=>{
 // example 
 
 
-let WatchOrder = new Promise((resolve,reject)=>{
+// let WatchOrder = new Promise((resolve,reject)=>{
 
-    let shope = false;
+//     let shope = false;
 
-    setTimeout(()=>{
+//     setTimeout(()=>{
 
-        if(shope){
-            resolve("watch is available")
+//         if(shope){
+//             resolve("watch is available")
+//         }
+
+//         else{
+//             reject("The shope is close");
+//         }
+//     },1000)
+// })
+
+
+// WatchOrder.then((smg)=>{
+//     console.log(smg);
+// });
+
+// WatchOrder.catch((err)=>{
+//     console.log(err);
+// })
+
+
+
+// milk example 
+
+const milkOrder = new Promise((resolve,reject)=>{
+
+    let milk = false;
+
+    setTimeout(() => {
+        
+        if(milk){
+            resolve("milk has been found")
         }
 
         else{
-            reject("The shope is close");
+            reject("milk shope is not open ")
         }
-    },1000)
+    }, 1000);
 })
 
+milkOrder.then((result)=>{
+    console.log(result);
+})
 
-WatchOrder.then((smg)=>{
-    console.log(smg);
-});
-
-WatchOrder.catch((err)=>{
+milkOrder.catch((err)=>{
     console.log(err);
 })
