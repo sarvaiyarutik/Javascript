@@ -27,36 +27,3 @@ shopping.then((smg)=>{
 shopping.catch((err)=>{
     console.log(err);
 });
-
-
-
-
-
-
-// example 
-
-
-let WatchOrder = new Promise((resolve,reject)=>{
-
-    let shope = false;
-
-    setTimeout(()=>{
-
-        if(shope){
-            resolve("watch is available")
-        }
-
-        else{
-            reject("The shope is close");
-        }
-    },1000)
-})
-
-
-WatchOrder.then((smg)=>{
-    console.log(smg);
-});
-
-WatchOrder.catch((err)=>{
-    console.log(err);
-})
