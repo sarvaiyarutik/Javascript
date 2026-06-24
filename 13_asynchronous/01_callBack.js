@@ -6,17 +6,17 @@
 
 // addition
 
-// function callBack(result){
-//     console.log(result);
-// }
+function callBack(result){
+    console.log(result);
+}
 
-// function total(a,b,call){
-//     let result = a+b;
+function total(a,b,call){
+    let result = a+b;
 
-//     callBack(result);
-// }
+    callBack(result);
+}
 
-// total(100,200,callBack);
+total(100,200,callBack);
 
 
 
