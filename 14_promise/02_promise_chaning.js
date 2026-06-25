@@ -1,58 +1,99 @@
 
 
+function Payment(amount){
 
-const FoodOrder = new Promise((resolve,reject)=>{
+  return new Promise((resolve,reject)=>{
 
-    let order = ["pizza","burger"];
+    if(amount < 0){
+      reject("Invalid Amount")
+    }
+    else{
+      setTimeout(()=>{
+        console.log(`${amount} Payment initialized`);
+
+        resolve(amount);
+      },1000)
+    }
+  });
+}
+
+let balance = 20000;
+
+function CheckBalance(amount){
+
+  return new Promise((resolve,reject)=>{
+
+    if(amount >   balance){
+      reject("insufficient balance")
+    }
+    else{
+      setTimeout(()=>{
+
+        console.log("available balance :",`${balance}`);
+
+        resolve(amount);
+
+      },1000);
+    }
+  });
+}
+
+function WithDraw(amount){
+
+  return new Promise((resolve,reject)=>{
+   
+    setTimeout(()=>{
+        console.log(`${amount} has been deduct `);
+
+        balance -= amount;
+
+        resolve(amount);
+    },2000)
+    
+  });
+}
+
+
+function updataBalance(amount){
+
+  return new Promise((resolve,reject)=>{
+
+    if(balance<= 0){
+      reject("empty balance");
+    }
+    else{
+
+      setTimeout(()=>{
+        console.log(`${amount} is currently available`)
+        resolve(amount);
+      },2000)
+    }
+  });
+}
+
+
+function PaymentStatus(amount){
+
+  return new Promise((resolve,reject)=>{
 
     setTimeout(()=>{
 
-        if(order.length > 0){
-            resolve(order);
+      resolve(`${amount} amount payment has been successfully`);
 
-            console.log("order placed")
-        }
-        else{
+    },2000);
+  });
+}
 
-            reject("please add some food dish to proceed order");
+Payment(-12)
+.then((am)=>{
+  return CheckBalance(am);
+}).then((am)=>{
+  return WithDraw(am);
+}).then((am)=>{
+    return updataBalance(am);
+}).then((am)=>{
 
-        }
-    },1000)
-});
-
-
-FoodOrder.then((order)=>{
-    return new Promise((resolve)=>{
-
-        setTimeout(()=>{
-            resolve(order);
-            
-            console.log("order received");
-        },2000);
-    });
-});
-
-
-FoodOrder.then((order)=>{
-
-    return new Promise((resolve,reject)=>{
-
-        const material = false;
-
-        setTimeout(()=>{
-            if(material){
-                resolve(order);
-                console.log("order prepared");
-            }
-            else{
-
-                reject("order rejected");
-                console.log("order rejected");
-            }
-        },3000)
-    })
-})
-
-.then((order)=>{
-    
+  return PaymentStatus(am);
+}).catch((err)=>{
+  console.log(err);
 })
