@@ -8,9 +8,9 @@ const Shopping = new Promise((resolve,reject)=>{
 
   let  cart = ["shoes","mobile","laptop"];
 
-  cart = [];
+//   cart = [];
 
-    if(cart <= 0){
+    if(cart.length <= 0){
 
         reject("please enter your item");
     }
