@@ -327,14 +327,14 @@ console.log(number18.splice(4,4,))
 
 let number19 = [100,200,300,400,500,600];
 
-    console.log(number19.every((num4)=>num4>700));
+    console.log(number19.every((num4)=>num4>100));
 
 
     // 2
 
     let number20 = [10,20,30,40,50,60];
 
-    console.log(number20.every((num5)=>num5>12))
+    console.log(number20.every((num5)=>num5>9))
 
 
     // 3
