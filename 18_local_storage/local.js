@@ -1,11 +1,11 @@
 
 
-// const data = {
+const data = {
 
-//     name : "tirth",
-//     roll:10,
-//     work:"developer"
-// }
+    name : "tirth",
+    roll:10,
+    work:"developer"
+}
 
 
 // localStorage.setItem("data",JSON.stringify(data));
@@ -13,6 +13,13 @@
 // const res = JSON.parse("data",localStorage.getItem(data));
 
 // console.log(res)
+
+
+localStorage = setItem("data",JSON.stringify(data));
+
+const rest = JSON.p("data",localStorage.getItem(data));
+
+console.log(rest);
 
 
 const products = [

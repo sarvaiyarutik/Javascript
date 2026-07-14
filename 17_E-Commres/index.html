@@ -20,7 +20,8 @@
           <a class="nav-link active" aria-current="page" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
+
+          <button class="btn btn-outline-danger" onclick="showCartModel()">Cart</button>
         </li>
        
       </ul>
@@ -38,6 +39,42 @@
 
             <div class="row" id="product-list"></div>
         </div>
+
+    <div class="modal" id="cartmodal" tabindex="-1">
+     <div class="modal-dialog">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cart List</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table table-striped">
+
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>image</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Qty</th>
+              <th colspan="2">Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="carttable">
+
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
     </main>
 
 
