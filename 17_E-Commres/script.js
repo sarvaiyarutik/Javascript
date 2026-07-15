@@ -255,7 +255,7 @@ async function productShow(){
 
       <div class = "card h-25 shadow">
       
-      <img src="${p.image}" class = "card-img-top" height="205">
+      <img src="${p.image}" class = "card-img-top" height="350">
 
       <div class ="card-body text-center">
       
@@ -286,44 +286,41 @@ productShow();
 
 
 
-function addCart(id){
+function addCart(id) {
 
-  try{
+    try {
 
+        let product = localCartItem.find((e) => e.id === id);
 
-    let product = localCartItem.find((e)=>e.id === id);
+        if (product) {
+            product.qty++;
+        } else {
 
-    console.log("product Added");
+            product = products.find((e) => e.id === id);
 
+            localCartItem.push({
+                ...product,
+                qty: 1
+            });
+        }
 
-    if(product){
+        update();  
 
-      product.qty++;
+        console.log(localCartItem);
+
+        alert("Product added successfully");
+
+    } catch (err) {
+        console.log(err);
     }
-    else{
-
-      product = products.find((e)=>e.id === id);
-
-
-      localCartItem.push({...product,qty:1})
-    }
-
-    alert("Product added successfully");
-
-    update();
-
-    console.log("product add",localCartItem);
-  }catch(err){
-
-    console.log(err)
-  }
-
-
 }
 
   const update = () =>{
 
     localStorage.setItem("CartData",JSON.stringify(localCartItem));
+ 
+    console.log(localStorage.getItem("cartData"))
+ 
   }
 
 
@@ -333,9 +330,10 @@ function addCart(id){
     let modal = new bootstrap.Modal(document.getElementById("cartmodal"))
 
     modal.show();
-
+   
+    
     updataData();
-
+    total();
   }
 
   function updataData(){
@@ -360,18 +358,28 @@ function addCart(id){
         
         <td>${p.name}</td>
 
-        <td>${p.priceCents}</td>
-        <td>${p.qty}</td>
+        <td>${(p.priceCents * p.qty)}</td>
+        <td>
 
+        <div class ="d-flex gap-2">
+        <button class = "btn btn-danger" onclick="decrease('${p.id}')"> - </button>
+        
+        ${p.qty}
+<button class="btn btn-success" onclick="increase('${p.id}')">+</button>
+        </div>
+    
+       
+        </td>
 
         <td>
-    
-        <div class ="d-flex gap-2 align-item-center justify-contact-center">
-        
-        <button class = "btn btn-danger">+</button>
 
-        <h5>${p.id}</h5>
-<button class = "btn btn-danger">-</button>
+        <button class = "btn btn-danger" onclick="remove('${p.id}')">remove</button>
+        
+        </td>
+        
+     
+      
+
         </div>
         </td>
         </tr>
@@ -382,6 +390,119 @@ function addCart(id){
       console.log(err);
     }
   }
+
+
+function increase(id){
+
+  
+  const products = localCartItem.find((p)=>p.id===id);
+  try{
+
+
+    if(products){
+
+      products.qty++;
+    }
+    update();
+    updataData();
+total();
+
+}catch(error){
+  console.log(error);
+}
+
+
+}
+
+
+function decrease(id){
+
+  const product  = localCartItem.find((p)=>p.id===id);
+
+  try{
+
+    if(product && product.qty > 1){
+
+      product.qty--;
+    }
+
+    else{
+
+      localCartItem.splice(product,1);
+    }
+
+    update();
+
+    updataData();
+
+    total();
+
+  }catch(error){
+
+    console.log(error);
+  }
+
+}
+
+
+function remove(id){
+
+  localCartItem = localCartItem.filter((p)=>p.id!==id);
+
+
+  update();
+  updataData();
+  
+  
+}
+
+
+function total(id){
+
+  const total = document.getElementById("total");
+
+  total.innerHTML = "";
+
+  const totalAmount = localCartItem.reduce((a,c)=>{
+
+    return (a+=c.priceCents*c.qty)
+  },0)
+
+  console.log(totalAmount);
+
+  total.innerHTML +=`<h5>₹${(totalAmount / 100).toFixed(2)}</h5>`;
+
+}
+
+
+
+function checkout(){
+
+
+  if(localCartItem.length === 0){
+
+    alert("Your cart is empty");
+
+    return;
+  }
+
+  const totalAmount = localCartItem.reduce((sum,item)=>{
+
+    return sum+ (item.priceCents * item.qty)
+  },0)
+
+  alert("order successfully");
+
+
+localCartItem = [];
+
+update();
+updataData();
+total();
+}
+
+
+
 
 
 

@@ -8,7 +8,7 @@ console.log(fruits.pop());
 console.log("remove last element :",fruits);
 
 
-// remove the first element 
+//shipt remove the first element 
 
 console.log(fruits.shift());
 

@@ -59,7 +59,7 @@ console.log(fruits);
 
 // push
 
-// // add element 
+// //end  add element 
 
 let fruits3 = ["banana","apple","mango"];
 

@@ -10,7 +10,7 @@ let course = "web developer";
 
 console.log("joined string method :"+course.concat("andcbackend"));
 
-//3 true if the string ends with a specific value
+//3 endsWith, true if the string ends with a specific value
 
 let name2 = "rutik";
 
