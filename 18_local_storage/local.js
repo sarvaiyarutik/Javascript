@@ -1,117 +1,277 @@
 
 
-const data = {
-
-    name : "tirth",
-    roll:10,
-    work:"developer"
-}
+let products = [];
 
 
-// localStorage.setItem("data",JSON.stringify(data));
-
-// const res = JSON.parse("data",localStorage.getItem(data));
-
-// console.log(res)
+let localCartItem = JSON.parse(localStorage.getItem("cartData")) || [];
 
 
-localStorage = setItem("data",JSON.stringify(data));
+async function  ShowProduct(){
+    
+    const product_list = document.getElementById("product-list");
 
-const rest = JSON.p("data",localStorage.getItem(data));
+    try{
 
-console.log(rest);
+        const API = await fetch("https://kolzsticks.github.io/Free-Ecommerce-Products-Api/main/products.json")
+   
+        const Data = await API.json();
 
+        console.log(Data);
 
-const products = [
-  {
-    name: "Wireless Mouse",
-    price: 599,
-    quantity: 25,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8kgP39bkGsX_LrOt8wuyQSzH2m61tz8ku3g43IecpEg&s=10"
-  },
-  {
-    name: "Bluetooth Headphones",
-    price: 1499,
-    quantity: 15,
-    image: "https://m.media-amazon.com/images/I/61RahTQtAqL.jpg "
-  },
-  {
-    name: "Mechanical Keyboard",
-    price: 2999,
-    quantity: 10,
-    image: "https://www.redragon.in/cdn/shop/products/K551RGB.png?v=1628502100&width=2048"
-  },
-  {
-    name: "USB-C Charger",
-    price: 799,
-    quantity: 40,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTijDyDQ00y6s3tm9Bfd9AcOOcr_Lgpy5PHPjdxclUitA&s=10"
-  },
-  {
-    name: "Laptop Stand",
-    price: 1199,
-    quantity: 20,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5ZrlYgrZ0qz-zQOOyC_L9xsummGMV6HCtVnxADJukmg&s=10"
-  },
-  {
-    name: "Smart Watch",
-    price: 3499,
-    quantity: 12,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmR87qFnZDJ5x5Kd3IcxgFWp5F5Jh4aFaJiPOZvyGP9w&s=10"
-  },
-  {
-    name: "Portable SSD 1TB",
-    price: 6999,
-    quantity: 8,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpdXSqi3cEcskeoDAinIbfZX6qEaWm3-oH79XOfN_o6w&s=10"
-  },
-  {
-    name: "Webcam HD",
-    price: 1899,
-    quantity: 18,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBEbnIvVi1jTcnkmr1u66mmoRETHWw3QARJKdOnrTX8A&s=10"
-  },
-  {
-    name: "Gaming Chair",
-    price: 8999,
-    quantity: 5,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbVyGAZ6e2--pUljRtm0C3TLqe_bIywe1xtXouWWt_Fg&s"
-  },
-  {
-    name: "Power Bank 20000mAh",
-    price: 1299,
-    quantity: 30,
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd17CYxsB-RQD5mEpuJzqAiy4hyclsUAsqCiNAWjIoGA&s=10"
-  },
- 
-];
+       products = Data;
+       
+       product_list.innerHTML = "";
 
-function allShow(){
- 
-    const product_i = document.getElementById("product");
+       products.forEach((e)=>{
 
-    product_i.innerHTML = "";
+        product_list.innerHTML += `
+        
+      <div class = "col-md-3  w-25 h-100">
 
-    products.forEach((e)=>{
-
-        product_i.innerHTML += `
+      <div class = "card h-25 shadow">
       
-        <div class = "col-md-3 flex ">
+      <img src="${e.image}" class = "card-img-top" height="350">
 
-        <div class="card m-1">
-  <img src="${e.image}" class="card-img-top" alt="${e.name}">
-  <div class="card-body">
-    <h5 class="card-title">${e.price}</h5>
-    <p class="card-text">${e.quantity}</p>
-    <h4>${e.name}</h3>
-  </div>
-</div>
-        </div>
+      <div class ="card-body text-center">
+      
+      <h4>${e.name}</h4>
+
+      <h4>₹${(e.priceCents / 100).toFixed(2)}</h4>
+
+
+      <button class = "btn btn-outline-danger" onclick="addCart('${e.id}')">Add to Cart</button>
+      </div>
+      
+      </div>
+      </div>
 
         `
-    })
-    
+
+       })
+   
+       
+    }catch(error){
+
+        console.log(error)
+    }
+
+}
+ShowProduct();
+
+
+function addCart(id){
+
+    try{
+
+        let product = localCartItem.find((p)=>p.id === id);
+
+
+        if(product){
+
+            product.qty++;
+        }
+        else{
+
+            product = products.find((p)=>p.id === id);
+
+
+            localCartItem.push({...product,qty:1});
+        }
+        console.log(localCartItem)
+        
+                alert("Product Added Successfully");
+        
+                update();
+                
+    }catch(error){
+
+        console.log(error);
+    }
+
+
 
 }
 
-allShow();
+
+function update(){
+
+  localStorage.setItem("cartData", JSON.stringify(localCartItem));
+    console.log(localCartItem)
+
+}
+
+
+function shoModal(){
+
+    let modal = new bootstrap.Modal(document.getElementById("shoModal"))
+
+    modal.show();
+   
+
+updateData();
+}
+
+function updateData(){
+
+    try{
+
+        let table = document.getElementById("cartTable")
+
+        table.innerHTML = "";
+
+        localCartItem.forEach((e)=>{
+
+            table.innerHTML += `
+            
+            <tr>
+            
+              <td>${e.id}</td>
+        <td><img src="${e.image}" class = "img-fluid" height="35px" width="35px"></td>
+        
+        <td>${e.name}</td>
+                <td>${(e.priceCents *e.qty)}</td>
+
+
+         <td>
+
+        <div class ="d-flex gap-2">
+        <button class = "btn btn-danger" onclick="decrease('${e.id}')"> - </button>
+        
+        ${e.qty }
+       <button class="btn btn-success" onclick="increase('${e.id}')">+</button>
+        </div>
+    
+       
+        </td>
+
+        <td>
+
+        <button class = "btn btn-danger" onclick="remove('${e.id}')">remove</button>
+        
+        </td>
+        </div>
+        </td>
+
+            </tr>
+            
+            `
+        })
+         total();
+    }catch(error){
+
+        console.log(error);
+    }
+
+}
+
+function increase(id){
+
+    try{
+
+        let product = localCartItem.find((p)=>p.id === id);
+
+        if(product){
+
+            product.qty++;
+        }
+
+        update();
+        updateData();
+
+
+    }catch(error){
+
+        console.log(error);
+    }
+
+}
+
+
+function decrease(id){
+
+    try{
+
+        let product = localCartItem.find((p)=>p.id===id);
+
+        if(product){
+
+            product.qty--;
+        }
+        if(product.qty === 0){
+
+            localCartItem = localCartItem.filter((p)=>p.id !== id);
+        }
+
+        update();
+        updateData();   
+    }catch(error)
+{
+    console.log(error);
+}
+}
+
+
+function remove(id){
+
+    try{
+
+        localCartItem = localCartItem.filter((p)=>p.id !== id);
+
+        update();
+        updateData();
+
+    }catch(error){
+
+        console.log(error)
+    }
+
+
+}
+
+
+function total(){
+
+    const total = document.getElementById("total");
+
+
+    total.innerHTML = "";
+
+    const totalAmount = localCartItem.reduce((a,c)=>{
+
+     return ( a += c.priceCents * c.qty);
+    },0)
+
+
+    total.innerHTML = `₹ ${totalAmount}`;
+
+    console.log("Total Amount :",totalAmount)
+
+}
+
+function checkOut(){
+
+
+    try{
+
+        if(localCartItem.length === 0){
+
+            return alert("your card is empty please added items");
+        }
+
+        alert("your order is successfully");
+
+        localCartItem = [];
+
+        updateData();
+
+        const cartModel = document.getElementById("cartModel");
+
+        const modal = new bootstrap.Modal(cartModel);
+
+        modal.hide();
+    }catch(error){
+
+        console.log(error);
+    }
+
+}

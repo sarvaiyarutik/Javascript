@@ -239,11 +239,9 @@ async function productShow(){
   try{
 
     const API = await fetch("https://kolzsticks.github.io/Free-Ecommerce-Products-Api/main/products.json")
+const Data = await API.json();
 
-    const Data = await API.json();
-
-    products = Data;
-
+products = Data;
 
     productList.innerHTML = "";
 
@@ -265,6 +263,8 @@ async function productShow(){
 
       <button class = "btn btn-danger " onclick="addCart('${p.id}')">Add to Cart</button>
 
+      <button class="btn btn-danger" onclick = "deleteProduct('${p.id}')">Remove</button>
+    
       </div>
       
       </div>
@@ -272,6 +272,7 @@ async function productShow(){
 
       `
     })
+
 
   }catch(err){
 
@@ -317,8 +318,7 @@ function addCart(id) {
 
   const update = () =>{
 
-    localStorage.setItem("CartData",JSON.stringify(localCartItem));
- 
+ localStorage.setItem("cartData", JSON.stringify(localCartItem)); 
     console.log(localStorage.getItem("cartData"))
  
   }
@@ -334,6 +334,7 @@ function addCart(id) {
     
     updataData();
     total();
+    
   }
 
   function updataData(){
@@ -452,7 +453,7 @@ function remove(id){
 
   update();
   updataData();
-  
+  total();
   
 }
 
@@ -481,25 +482,116 @@ function checkout(){
 
   if(localCartItem.length === 0){
 
-    alert("Your cart is empty");
+  return  alert("Your cart is empty");
 
-    return;
+    
   }
 
-  const totalAmount = localCartItem.reduce((sum,item)=>{
-
-    return sum+ (item.priceCents * item.qty)
-  },0)
-
-  alert("order successfully");
-
+    alert("order successfully");
 
 localCartItem = [];
 
-update();
 updataData();
+update();
 total();
+
 }
+
+
+
+function productAdded(){
+
+
+  let modal = new bootstrap.Modal(document.getElementById("formModal"))
+
+
+  modal.show();
+
+}
+
+
+document.getElementById("FromTable").addEventListener("submit", (e) => {
+
+    e.preventDefault();
+
+    const Pname = document.getElementById("productName").value.trim();
+    const Pprice = document.getElementById("productPrice").value.trim();
+    const Pimg = document.getElementById("productImage").value.trim();
+
+    const newProduct = {
+
+        id: Date.now().toString(),
+
+        name: Pname,
+
+        image: Pimg,
+
+        priceCents: Number(Pprice) * 100
+
+    };
+
+    products.push(newProduct)
+
+  
+
+
+const productList = document.getElementById("product-list");
+
+productList.innerHTML += `
+  <div class="col-md-6 w-25 h-100">
+
+    <div class="card h-25 shadow">
+
+      <img src="${newProduct.image}" class="card-img-top" height="350">
+
+      <div class="card-body text-center">
+
+        <h4>${newProduct.name}</h4>
+
+        <h4>₹${(newProduct.priceCents / 100).toFixed(2)}</h4>
+
+        <button 
+          class="btn btn-danger"
+          onclick="addCart('${newProduct.id}')"
+        >
+          Add to Cart
+        </button>
+              <button 
+  class="btn btn-danger"
+  onclick="deleteProduct('${newProduct.id}')"
+>
+  Remove
+</button>
+
+
+      </div>
+
+    </div>
+
+  </div>
+`;
+
+  
+});
+function deleteProduct(id) {
+
+  products = products.filter((p) => p.id !== id);
+
+productShow();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
