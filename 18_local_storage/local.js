@@ -1,6 +1,71 @@
 
+    const products = [
+      {
+        id:1,
+        name: "Wireless Headphones",
+        price: 2499,
+        quantity: 1,
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop"
+      },
+      {
+        id:2,
+        name: "Smart Watch",
+        price: 5999,
+        quantity: 2,
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop"
+      },
+      {
+            id:3,
+        name: "Running Shoes",
+        price: 3299,
+        quantity: 1,
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop"
+      },
+      {
+            id:4,
+        name: "Leather Backpack",
+        price: 1899,
+        quantity: 1,
+        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop"
+      },
+      {
+            id:5,
+        name: "Bluetooth Speaker",
+        price: 1799,
+        quantity: 1,
+        image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=300&h=300&fit=crop"
+      },
+      {
+            id:6,
+        name: "Sunglasses",
+        price: 899,
+        quantity: 2,
+        image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=300&h=300&fit=crop"
+      },
+      {
+            id:7,
+        name: "Coffee Mug",
+        price: 349,
+        quantity: 3,
+        image: "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=300&h=300&fit=crop"
+      },
+      {
+        id:8,
+        name: "Denim Jacket",
+        price: 2999,
+        quantity: 1,
+        image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=300&h=300&fit=crop"
+      },
+      {
+        id:9,
+        name: "Yoga Mat",
+        price: 999,
+        quantity: 1,
+        image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=300&h=300&fit=crop"
+      },
+    ];
 
-let products = [];
+
 
 
 let localCartItem = JSON.parse(localStorage.getItem("cartData")) || [];
@@ -10,15 +75,7 @@ async function  ShowProduct(){
     
     const product_list = document.getElementById("product-list");
 
-    try{
 
-        const API = await fetch("https://kolzsticks.github.io/Free-Ecommerce-Products-Api/main/products.json")
-   
-        const Data = await API.json();
-
-        console.log(Data);
-
-       products = Data;
        
        product_list.innerHTML = "";
 
@@ -36,10 +93,10 @@ async function  ShowProduct(){
       
       <h4>${e.name}</h4>
 
-      <h4>₹${(e.priceCents / 100).toFixed(2)}</h4>
+      <h4>₹${(e.price / 100).toFixed(2)}</h4>
 
 
-      <button class = "btn btn-outline-danger" onclick="addCart('${e.id}')">Add to Cart</button>
+      <button class = "btn btn-outline-danger" onclick="addCart(${e.id})">Add to Cart</button>
       </div>
       
       </div>
@@ -50,11 +107,6 @@ async function  ShowProduct(){
        })
    
        
-    }catch(error){
-
-        console.log(error)
-    }
-
 }
 ShowProduct();
 
@@ -129,16 +181,16 @@ function updateData(){
         <td><img src="${e.image}" class = "img-fluid" height="35px" width="35px"></td>
         
         <td>${e.name}</td>
-                <td>${(e.priceCents *e.qty)}</td>
+                <td>${(e.price *e.qty)}</td>
 
 
          <td>
 
         <div class ="d-flex gap-2">
-        <button class = "btn btn-danger" onclick="decrease('${e.id}')"> - </button>
+        <button class = "btn btn-danger" onclick="decrease(${e.id})"> - </button>
         
         ${e.qty }
-       <button class="btn btn-success" onclick="increase('${e.id}')">+</button>
+       <button class="btn btn-success" onclick="increase(${e.id})">+</button>
         </div>
     
        
@@ -146,7 +198,7 @@ function updateData(){
 
         <td>
 
-        <button class = "btn btn-danger" onclick="remove('${e.id}')">remove</button>
+        <button class = "btn btn-danger" onclick="remove(${e.id})">remove</button>
         
         </td>
         </div>
@@ -238,11 +290,11 @@ function total(){
 
     const totalAmount = localCartItem.reduce((a,c)=>{
 
-     return ( a += c.priceCents * c.qty);
+     return ( a += c.price * c.qty);
     },0)
 
 
-    total.innerHTML = `₹ ${totalAmount}`;
+    total.innerHTML = `₹${totalAmount}`;
 
     console.log("Total Amount :",totalAmount)
 
@@ -269,6 +321,8 @@ function checkOut(){
         const modal = new bootstrap.Modal(cartModel);
 
         modal.hide();
+
+        ShowProduct();
     }catch(error){
 
         console.log(error);

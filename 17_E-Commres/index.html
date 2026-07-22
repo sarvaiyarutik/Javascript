@@ -20,7 +20,7 @@
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
           <li class="nav-item">
-
+ 
             <button class="btn btn-info" onclick="showCartModel()">Cart</button>
             <button class="btn btn-info" onclick="productAdded()">Product Added</button>
           </li>
@@ -90,23 +90,59 @@
       " id = "FromTable">
       <div class="modal-body">
            <div class="form-floating mb-3">
-  <input type="text" class="form-control" id="productName" name="name" required placeholder="name@example.com">
+  <input type="text" class="form-control" id="productName" name="productName" required placeholder="name@example.com">
   <label for="floatingInput">Product name</label>
 </div>
 <div class="form-floating">
-  <input type="text" class="form-control" required id="productPrice" name="price" placeholder="Password">
+  <input type="text" class="form-control" required id="productPrice" name="productPrice" placeholder="Password">
   <label for="floatingPassword">Product price</label>
 </div>
 <div class="form-floating"> 
-  <input type="text" class="form-control" required id="productImage" name="img" placeholder="Password">
+  <input type="text" class="form-control" required id="productImage" name="productImage" placeholder="Password">
   <label for="floatingPassword">Product image</label>
 </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary" >Product Added</button>
       </div>
       </form>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="UpdateCartModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Modal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form action="
+      " id = "UpdateModal">
+      <div class="modal-body">
+           <div class="form-floating mb-3">
+  <input type="text" class="form-control" id="updataProductName" name="updataProductName" required placeholder="name@example.com">
+  <label for="floatingInput">Product name</label>
+</div>
+<div class="form-floating">
+  <input type="text" class="form-control" required id="updataProductPrice" name="updataProductPrice" placeholder="Password">
+  <label for="floatingPassword">Product price</label>
+</div>
+<div class="form-floating"> 
+  <input type="text" class="form-control" required id="updataProductImage" name="updataProductImage" placeholder="Password">
+  <label for="floatingPassword">Product image</label>
+</div>
+      </div>
+   
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Update Product</button>
+      </div>
+         </form>
     </div>
   </div>
 </div>
