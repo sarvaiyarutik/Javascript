@@ -63,39 +63,80 @@ const quizQuestions = [
 ];
 
 
-const questionQuiz = document.getElementById("questionQuiz");
+const displayQuestion = document.getElementById("displayQuestion");
+const Question = document.getElementById("Question");
+const timeSector = document.getElementById("timeSector");
+const option = document.getElementById("option");
 
 let count = 0;
 
-questionQuiz.innerText = quizQuestions[count].question;
+let selectAnswer = 0;
+
+let score = 0;
+
+displayQuestion.innerText = quizQuestions[count].question;
 
 function showQuestion(){
   
-  
-  const option = document.getElementById("option")
-
-
   option.innerHTML = "";
 
+
+  Question.innerText = `Question${count + 1}/${quizQuestions.length}`
   
   const currentQuestion = quizQuestions[count];
 
+  displayQuestion.innerText = currentQuestion.question;
+
   currentQuestion.option.forEach(function(e){
 
-    const col = document.createElement("div");
-    col.className = "col-6";
+    let col = document.createElement("div");
 
-    const btn = document.createElement("button");
-    btn.innerText = e;
-    btn.className = "btn btn-outline-primary w-100 my-2";
+    col.classList.add("col-md-6");
 
-    col.appendChild(btn);
+    let button = document.createElement("button");
 
+    button.innerText = e;
+
+    button.classList.add("btn","btn-outline-warning","option-btn")
+
+    button.onclick = function(){
+      selectAnswer = e;
+      nextBTN();
+    }
+  
     option.appendChild(col);
 
+    col.appendChild(button);
+
 });
-
-
 }
 
 showQuestion();
+
+
+function nextBTN(){
+
+  const currentQuestion = quizQuestions[count];
+
+  if(selectAnswer === currentQuestion.correct){
+
+    score++;
+   
+
+  }
+ count++;
+  
+  selectAnswer = null;
+
+  if(count < quizQuestions.length){
+    showQuestion();
+
+  }else{
+    option.innerHTML = "";
+    questionQuiz.innerText = "Quiz Completed!";
+    Question.innerText = ` Score : ${score}/${quizQuestions.length}`;
+  }
+
+}
+
+
