@@ -81,7 +81,7 @@ function showQuestion(){
   option.innerHTML = "";
 
 
-  Question.innerText = `Question${count + 1}/${quizQuestions.length}`
+  Question.innerText = `Question ${count + 1}/${quizQuestions.length}`
   
   const currentQuestion = quizQuestions[count];
 
@@ -133,8 +133,8 @@ function nextBTN(){
 
   }else{
     option.innerHTML = "";
-    questionQuiz.innerText = "Quiz Completed!";
-    Question.innerText = ` Score : ${score}/${quizQuestions.length}`;
+    displayQuestion.innerText = "Quiz Completed!";
+    Question.innerText = ` score : ${score}/${quizQuestions.length}`;
   }
 
 }
