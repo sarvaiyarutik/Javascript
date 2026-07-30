@@ -101,6 +101,9 @@ function showQuestion(){
 
     button.onclick = function(){
       selectAnswer = e;
+
+      console.log(selectAnswer)
+
       nextBTN();
     }
   
@@ -116,27 +119,32 @@ showQuestion();
 
 function nextBTN(){
 
-  const currentQuestion = quizQuestions[count];
-
-  if(selectAnswer === currentQuestion.correct){
-
-    score++;
-   
-
+  if(selectAnswer === quizQuestions[count].correct){
+    score++; 
   }
+
+  if(count < quizQuestions.length - 1){
  count++;
-  
-  selectAnswer = null;
-
-  if(count < quizQuestions.length){
+    selectAnswer = null;
     showQuestion();
+      }
 
-  }else{
-    option.innerHTML = "";
-    displayQuestion.innerText = "Quiz Completed!";
-    Question.innerText = ` score : ${score}/${quizQuestions.length}`;
+  else{
+    console.log(score)
+  
+    
+ScoreResult();
   }
+} 
 
+function ScoreResult(){
+
+  const result = document.getElementById("result");
+
+  result.innerHTML = `
+  
+ <h4 class="text-center">🎉Total Score : ${score}/${quizQuestions.length}</h4>
+
+  `
 }
-
 
