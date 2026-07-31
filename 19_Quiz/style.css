@@ -1,22 +1,102 @@
-
-*{
-
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.card-quiz{
-
-
-    width: 500px;
-    height: 500px;
-
+body {
+    background-color: #f5f7fa;
 }
 
-.option-btn{
+.card-quiz {
+    width: 500px;
+    height: auto;
+    padding: 0 20px 10px;
+    margin: 0;
+}
 
-    width:230px;
+#result {
+    margin-top: 5px;
+    padding: 5px;
+}
+.card-quiz {
+    width: 500px;
+    padding: 0 20px 10px;  /* bottom 10px */
+    background-color: white;
+    border: none;
+}
+/* Quiz Heading */
+.card-quiz h2 {
+    font-weight: 700;
+}
+
+/* Question Number + Timer */
+#Question,
+#timeSector {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Question */
+#displayQuestion {
+    min-height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+/* Options */
+#option {
+    margin-top: 10px;
+}
+
+/* Option Button */
+.option-btn {
+    width: 100%;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Next Button */
+.card-quiz > button {
     height: 45px;
-    
+    font-size: 17px;
+    font-weight: 600;
+}
+
+/* Result */
+#result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+}
+
+#result h4 {
+    margin: 5px 0;
+}
+
+/* Mobile Responsive */
+@media (max-width: 576px) {
+
+    .card-quiz {
+        width: 100%;
+        padding: 0 15px 20px;
+    }
+
+    #Question,
+    #timeSector {
+        font-size: 15px;
+    }
+
+    #displayQuestion {
+        font-size: 22px !important;
+    }
+
+    .option-btn {
+        width: 100%;
+    }
 }

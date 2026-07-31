@@ -74,6 +74,13 @@ let selectAnswer = 0;
 
 let score = 0;
 
+let userAnswer = [];
+
+let time;
+
+let timeSet = 30;
+
+
 displayQuestion.innerText = quizQuestions[count].question;
 
 function showQuestion(){
@@ -100,28 +107,42 @@ function showQuestion(){
     button.classList.add("btn","btn-outline-warning","option-btn")
 
     button.onclick = function(){
-      selectAnswer = e;
 
-      console.log(selectAnswer)
+    selectAnswer = e;
 
-      nextBTN();
-    }
+
+    console.log(selectAnswer);
+
+    nextBTN();
+      
+}
+
   
     option.appendChild(col);
 
     col.appendChild(button);
 
 });
+SetTime()
 }
 
 showQuestion();
 
 
 function nextBTN(){
+    const currentQuestion = quizQuestions[count];
+
 
   if(selectAnswer === quizQuestions[count].correct){
     score++; 
   }
+
+
+ userAnswer.push({
+    question: currentQuestion.question,
+    selectAnswer: selectAnswer,
+    correct: currentQuestion.correct
+})
 
   if(count < quizQuestions.length - 1){
  count++;
@@ -132,19 +153,91 @@ function nextBTN(){
   else{
     console.log(score)
   
-    
+  
 ScoreResult();
   }
 } 
+
+function SetTime(){
+
+  let timeA = document.getElementById("timeSector");
+
+  clearInterval(time);
+
+  timeSet = 30;
+
+  timeA.innerText = `Time Set ${timeSet}`;
+
+  time = setInterval(()=>{
+
+    timeSet--;
+    timeA.innerText = `Time Set ${timeSet}`;
+
+
+    if(timeSet <= 0){
+
+      userAnswer.push({
+        question:quizQuestions[count].question,
+        selectAnswer:null,
+        correct:quizQuestions[count].correct,
+        option:quizQuestions[count].option
+      })
+      nextBTN();
+    }
+
+
+  },1000)
+
+}
+SetTime();
+
+
 
 function ScoreResult(){
 
   const result = document.getElementById("result");
 
   result.innerHTML = `
-  
- <h4 class="text-center">🎉Total Score : ${score}/${quizQuestions.length}</h4>
+   <h4 class="text-center">🎉Total Score </h4>
 
-  `
+  
+ <h4 class="text-center">${score}/${quizQuestions.length}</h4>
+ <br>
+ <div class = "list">
+ 
+ <h3 class = "text-center">Review Summary</h3>
+
+ <ul class="list-group">
+  ${userAnswer.map((answer,index)=>
+    `
+
+   <li class="list-group-item">
+
+   <h5 class="text-center">Question No :- ${index + 1} ${answer.question}</h5>
+
+   <br>
+
+   <h6 class="text-center">Your Answer :- ${answer.selectAnswer !== null ? answer.selectAnswer:"not answered"}</h6>
+   
+   <br>
+
+
+   <h6 class ="text-center">Correct Answer :-${answer.correct}</h6>
+   
+   </li>
+    ` 
+  )}
+  
+
+
+ </ul >
+
+
+ </div>
+ 
+ 
+ `
 }
+
+
 
